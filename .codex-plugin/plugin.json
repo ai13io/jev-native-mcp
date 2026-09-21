@@ -1,0 +1,28 @@
+{
+  "name": "jev-native",
+  "version": "0.4.0",
+  "description": "Jev decision support for public or synthetic review and security-research queues.",
+  "author": {
+    "name": "Jev Native contributors"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Jev Native",
+    "shortDescription": "Ranking, classification, and claim review with Jev.",
+    "longDescription": "Sends reviewed public or synthetic decision payloads through a loopback or private-network MCP to the hosted TypeSafe Jev API. Adds advisory ranking, fixed-taxonomy classification, claim review, and an optional security-triage workflow. It never authorizes, discards, submits, or executes anything.",
+    "developerName": "Jev Native contributors",
+    "category": "Productivity",
+    "capabilities": [
+      "Advisory decisions",
+      "Hosted inference",
+      "Loopback or private-network MCP transport",
+      "Security research triage"
+    ],
+    "defaultPrompt": [
+      "Audit this public source queue without dropping anything.",
+      "Compare this public claim with its exact evidence span.",
+      "Extract atomic signals from this larger synthetic queue."
+    ]
+  },
+  "mcpServers": "./.mcp.json"
+}

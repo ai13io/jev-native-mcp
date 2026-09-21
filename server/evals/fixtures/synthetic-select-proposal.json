@@ -1,0 +1,22 @@
+{
+  "name": "synthetic-host-owned-proposal-selection",
+  "tool": "jev_select",
+  "data_class": "synthetic",
+  "repeats": 3,
+  "goal": "Choose the next proposal that gathers direct evidence about a public source behavior without executing a live action or discarding any candidate.",
+  "expected_selected_id": "inspect_callers",
+  "options": [
+    {
+      "id": "inspect_callers",
+      "text": "Read the public source callers and guards around the already identified method."
+    },
+    {
+      "id": "repeat_same_search",
+      "text": "Repeat the identical text search without changing the query or corpus."
+    },
+    {
+      "id": "declare_impact",
+      "text": "Declare security impact without reading callers or obtaining runtime evidence."
+    }
+  ]
+}

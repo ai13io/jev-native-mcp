@@ -1,0 +1,11 @@
+interface:
+  display_name: "Jev Native"
+  short_description: "Bounded review decisions on public or synthetic data"
+  default_prompt: "Use $jev-native to rank this public or synthetic candidate set without discarding any item."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "jev-native"
+      description: "Loopback or private-network MCP wrapper for hosted TypeSafe Jev decisions"
+policy:
+  allow_implicit_invocation: true

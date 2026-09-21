@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jev-native-mcp"
+version = "0.4.0"
+description = "Hosted Jev inference through a local or private-network MCP endpoint"
+requires-python = ">=3.10"
+dependencies = [
+  "httpx==0.28.1",
+  "mcp==2.2.0"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest==9.0.3"
+]
+
+[dependency-groups]
+dev = [
+  "pytest==9.0.3"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.setuptools]
+py-modules = ["server", "receipt_ledger"]

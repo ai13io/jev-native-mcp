@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>io.jev-native.mcp</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/sh</string>
+    <string>__SERVER_DIR__/deploy/run-macos-keychain.sh</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>__SERVER_DIR__</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>JEV_PYTHON</key>
+    <string>__PYTHON__</string>
+    <key>JEV_KEYCHAIN_ACCOUNT</key>
+    <string>__KEYCHAIN_ACCOUNT__</string>
+    <key>JEV_KEYCHAIN_SERVICE</key>
+    <string>jev-native-typesafe-api-key</string>
+    <key>JEV_RECEIPT_KEYCHAIN_SERVICE</key>
+    <string>jev-native-receipt-hmac-key</string>
+    <key>JEV_MCP_HOST</key>
+    <string>127.0.0.1</string>
+    <key>JEV_MCP_PORT</key>
+    <string>8765</string>
+    <key>JEV_BUDGET_PATH</key>
+    <string>__STATE_DIR__/usage.json</string>
+    <key>JEV_RECEIPT_DIR</key>
+    <string>__STATE_DIR__/receipts-v2</string>
+  </dict>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <dict>
+    <key>SuccessfulExit</key>
+    <false/>
+  </dict>
+  <key>ProcessType</key>
+  <string>Background</string>
+  <key>StandardOutPath</key>
+  <string>__LOG_DIR__/jev-native-mcp.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>__LOG_DIR__/jev-native-mcp.err.log</string>
+</dict>
+</plist>

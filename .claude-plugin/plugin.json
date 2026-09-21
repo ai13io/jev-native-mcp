@@ -1,0 +1,17 @@
+{
+  "name": "jev-native",
+  "version": "0.4.0",
+  "description": "Jev decision support for public or synthetic review and security-research queues.",
+  "author": {
+    "name": "Jev Native contributors"
+  },
+  "keywords": [
+    "jev",
+    "mcp",
+    "ranking",
+    "classification",
+    "claim-review",
+    "pentest",
+    "security-research"
+  ]
+}

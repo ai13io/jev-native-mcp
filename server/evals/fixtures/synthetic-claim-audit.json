@@ -1,0 +1,10 @@
+{
+  "name": "synthetic-claim-evidence-three-way",
+  "tool": "jev_claim_audit",
+  "data_class": "synthetic",
+  "repeats": 3,
+  "source_id": "release-note-17",
+  "claim": "The release enables automatic routing in both Codex and Claude Code.",
+  "evidence": "The release provides a command-line helper and installable skills for Codex and Claude Code. Automatic routing is available only in Hermes.",
+  "expected_relation": "contradicts"
+}
