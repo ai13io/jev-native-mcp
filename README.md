@@ -241,7 +241,8 @@ paid end-to-end smoke for the provider, receipt, and result path.
 
 The server, installed-package MCP transport, a tiny live TypeSafe decision, and
 Codex portable-plugin pickup have been exercised on macOS and Kali Linux.
-Windows, persistent service templates, and Claude live pickup remain explicitly
+The complete hosted test matrix also passes on Windows. Live Windows launcher,
+persistent service templates, and Claude live pickup remain explicitly
 unverified. Versions, results, and boundaries are recorded in
 [Verification](docs/verification.md); they are evidence for those configurations,
 not a claim that every deployment works.

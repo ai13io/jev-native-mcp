@@ -4,7 +4,7 @@ This page records what release 0.4.0 has actually exercised. It is evidence for
 the named configuration, not a portability or semantic-quality guarantee.
 
 The portable ZIP and SHA-256 checksums are attached to release tag
-`v0.4.0-rc4`.
+`v0.4.0-rc5`.
 
 ## Verified paths
 
@@ -16,6 +16,7 @@ The portable ZIP and SHA-256 checksums are attached to release tag
 | TypeSafe path | One tiny synthetic `jev_rank` returned pinned `jev-1.13.0`, preserved all three IDs, and wrote one budget event plus one request-body-free receipt | Verified on Kali loopback |
 | Codex portable plugin | Codex CLI `0.155.0-alpha.9.2` loaded both bundled skills and discovered/called the candidate `jev_health` tool | Verified on macOS |
 | Package reproducibility | Git and extracted-tree builds were byte-identical; positive inventory and manifest hashes matched every source file | Verified |
+| Hosted CI matrix | Ubuntu/Python 3.10 and 3.13, macOS/Python 3.12, and Windows/Python 3.12 completed the full checked-in workflow | Verified |
 
 The live TypeSafe call used synthetic documentation cards. It consumed 484
 input tokens in one attempt with an estimated input cost of `$0.000020328`.
@@ -26,14 +27,14 @@ quality.
 
 | Surface | Current evidence |
 | --- | --- |
-| Windows foreground launcher | PowerShell parses and unit tests pass; no hosted Windows run has completed |
+| Windows foreground launcher | Hosted Windows/Python 3.12 tests pass; the foreground process has not been exercised on a Windows host |
 | macOS launchd | Template and static checks only |
 | Linux systemd | Template and static checks only |
 | Claude Code live pickup | Manifest validation passed; available Claude Code `2.0.65` timed out on the same no-plugin control request and plugin attempt |
 
-The checked-in GitHub Actions matrix targets Ubuntu/Python 3.10 and 3.13,
-macOS/Python 3.12, and Windows/Python 3.12. A configured job counts only after
-the hosted runner executes it successfully.
+The checked-in GitHub Actions matrix completed successfully for all four target
+jobs. This verifies the automated contracts, not launchd, systemd, or a live
+Windows foreground process.
 
 ## Test-suite breakdown
 
