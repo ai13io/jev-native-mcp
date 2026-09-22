@@ -23,18 +23,14 @@ non-sensitive public or synthetic material.
 
 ## What you can do
 
-- **Build a focused reading queue.** Rank public source or documentation while
-  retaining every original item, stable ID, cutoff tie, skipped region, and
-  failed batch for follow-up.
+- **Build a focused reading queue.** Rank public source or documentation, keep
+  links to the originals, and see which items still need review.
 - **Apply one question across a collection.** Screen a frozen corpus for a
   behavior, classify public issues, or identify release notes that may require
   application changes.
 - **Check conclusions against sources.** Compare an exact claim with an exact
   passage as `supports`, `contradicts`, or `insufficient`, then inspect the
   original yourself.
-- **Decide whether Jev deserves a place in the workflow.** Start by observing
-  its output without changing the existing process. Let it reorder work only
-  after it meets evaluation criteria defined before the trial.
 
 ## A review workflow in practice
 
@@ -68,21 +64,15 @@ provides the ranking, batch screening, source addressing, claim checks, and
 evaluation record. Unprocessed items, skipped regions, ties, and failed batches
 remain visible instead of disappearing from the result.
 
-This is a workflow illustration, not a benchmark or recorded migration result.
-Use the bundled evaluation tools to compare it with the existing review process
-before allowing Jev rankings to change reading order.
+This example illustrates the workflow; it is not a recorded run.
 
 ## What is included
 
-| Component | What it adds |
-| --- | --- |
-| MCP server | Eight bounded tools for health, decisions, ranking, batch predicates, claim review, proposal selection, signal matrices, and local outcome recording |
-| `jev-native` skill | General routing rules for repeated public or synthetic decision work |
-| `jev-pentest` skill | Security-specific source triage, OSINT reranking, claim/evidence review, and adoption gates without granting Jev testing authority |
-| Public-source runner | Deterministic inventory and local screening before exhaustive bounded batches, with truthful partial-failure accounting |
-| Evaluation harness | Independent result validation, repeatability metrics, frozen fixtures, and shadow-to-advisory qualification support |
-| Runtime controls | Exact model pin, strict response validation, bounded retries, daily budget, persistence preflight, and request-body-free receipts |
-| Portable release | Codex marketplace, Claude plugin, macOS/Linux/Windows guides, verified file inventory, manifest, and deterministic ZIP |
+The package includes eight MCP tools, two workflow skills, a helper for preparing
+and batching public source files, and evaluation tools for comparing results
+with a baseline. It also provides local spending limits and receipt logs that
+record usage and outcomes without storing request bodies. Setup guides cover
+Codex, Claude Code, and local or private-network deployments.
 
 ## Tools
 

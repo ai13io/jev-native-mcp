@@ -15,18 +15,10 @@ Only the current release line receives security fixes.
 
 ## Reporting a vulnerability
 
-Before the repository becomes public, its owner must enable GitHub private
-vulnerability reporting under **Settings → Security → Code security and
-analysis**.
-
-Submit reports through this repository-specific URL:
-
-[https://github.com/ai13io/jev-native-mcp/security/advisories/new](https://github.com/ai13io/jev-native-mcp/security/advisories/new)
-
-Do not open a public issue, pull request, or discussion containing vulnerability
-details, credentials, private data, or a proof of concept. If the private form
-is unavailable, publication is not ready: wait for the maintainer to restore a
-private reporting route.
+Report vulnerabilities privately through
+[GitHub Security Advisories](https://github.com/ai13io/jev-native-mcp/security/advisories/new).
+Do not include vulnerability details, credentials, or private data in public
+issues or pull requests.
 
 A useful private report contains:
 
