@@ -117,5 +117,5 @@ A deployment is usable only after a new client session:
 Use a synthetic fixture for any decision smoke. The release candidate completed
 one tiny `jev_rank` call through the universal server on Kali loopback: TypeSafe
 returned pinned `jev-1.13.0`, all three candidate IDs were preserved, and one
-budget event plus content-free receipt were written. This verifies the path,
+budget event plus request-body-free receipt were written. This verifies the path,
 not semantic ranking quality or another deployment.

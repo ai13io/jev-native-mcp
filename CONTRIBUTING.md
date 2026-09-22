@@ -44,6 +44,17 @@ server/.venv/bin/python scripts/verify_release.py
 This is the canonical local test route and matches the suites listed in the
 README and CI workflow.
 
+Build a release candidate outside the source root:
+
+```bash
+server/.venv/bin/python scripts/package_portable.py \
+  --output ../dist/jev-native-0.4.0.zip
+```
+
+Review `release-files.txt`, `PACKAGE-MANIFEST.json`, the resulting SHA-256, and
+the extracted archive before distribution. Selected credential-pattern checks
+are a tripwire, not a complete secret or confidentiality classifier.
+
 Live fixtures under `server/evals/fixtures/` are separate. They require a
 running server, consume provider quota, and must use only reviewed public or
 synthetic content.

@@ -17,6 +17,63 @@ or repeatable.
 > Decision inputs are sent to TypeSafe. Use non-sensitive public or synthetic
 > data. Results are advisory and must be evaluated against your own baseline.
 
+## Why this project exists
+
+Jev exposes fast typed decisions, but an API primitive alone does not give an
+agent an explicit operating contract. A useful integration still has to decide what
+may leave the machine, preserve every candidate, reject malformed responses,
+control spend, survive partial failures, and show an operator what happened.
+
+Jev Native MCP supplies that missing operational layer:
+
+- **Native agent tools, not prompt snippets.** Codex, Claude Code, and generic
+  MCP clients receive real typed tools through Streamable HTTP.
+- **Complete-set review.** Rankings retain every stable ID, expand cutoff ties,
+  and never turn a low score into permission to discard evidence.
+- **Fail-loud contracts.** Missing IDs, impossible probabilities, wrong model
+  versions, malformed scores, and incomplete batches remain errors—not empty or
+  apparently successful results.
+- **Controlled hosted use.** Only caller-declared public or synthetic inputs are
+  accepted; local screening is a final tripwire before TypeSafe egress.
+- **Operational accountability.** The server enforces a local spend ceiling and
+  writes request-body-free, HMAC-linked receipts plus closed outcome telemetry.
+- **Portable packaging.** One bundle includes Codex and Claude manifests,
+  workstation/private-server guides, deterministic packaging, and a positive
+  release inventory. Exercised paths are listed in
+  [Verification](docs/verification.md).
+
+The intended workflow is deliberately simple:
+
+```text
+deterministic inventory -> reviewed cards -> Jev advisory decision
+        -> agent reads original evidence -> independent outcome record
+```
+
+Jev reduces the first-pass queue. The reasoning agent still owns source
+understanding, verification, and every consequential decision.
+
+## What is included
+
+| Component | What it adds |
+| --- | --- |
+| MCP server | Eight bounded tools for health, decisions, ranking, batch predicates, claim review, proposal selection, signal matrices, and local outcome recording |
+| `jev-native` skill | General routing rules for repeated public or synthetic decision work |
+| `jev-pentest` skill | Security-specific source triage, OSINT reranking, claim/evidence review, and adoption gates without granting Jev testing authority |
+| Public-source runner | Deterministic inventory and local screening before exhaustive bounded batches, with truthful partial-failure accounting |
+| Evaluation harness | Independent result validation, repeatability metrics, frozen fixtures, and shadow-to-advisory qualification support |
+| Runtime controls | Exact model pin, strict response validation, bounded retries, daily budget, persistence preflight, and request-body-free receipts |
+| Portable release | Codex marketplace, Claude plugin, macOS/Linux/Windows guides, verified file inventory, manifest, and deterministic ZIP |
+
+## How it differs
+
+| Alternative | What remains for the integrator | Jev Native MCP |
+| --- | --- | --- |
+| Official Jev skill | Teaches API usage but does not create a running MCP service or tools | Ships the server, tool contracts, skills, deployment, and release bundle |
+| Direct TypeSafe SDK/API | Application must implement validation, data policy, spend control, receipts, and client wiring | Centralizes those controls behind one MCP contract |
+| Browser or action automation | Browser control and action execution are outside this project's scope | No browser driver; selection results never execute actions |
+| Compaction or model routing | Context mutation and automatic model routing are outside this project's scope | No context deletion or automatic routing; results remain advisory |
+| Local Jev-like models | Keep inference local but use a different model and compatibility surface | Uses hosted TypeSafe Jev and makes that egress explicit |
+
 ## Example: prioritize a documentation queue
 
 This synthetic example shows the `jev_rank` contract. It is an optional paid
@@ -91,7 +148,7 @@ approve anything.
 MCP client -> loopback/private-network server -> hosted TypeSafe Jev API
                          |                 |
                          |                 +-- validated typed result
-                         +-- local budget and content-free receipt metadata
+                         +-- local budget and request-body-free receipt metadata
 ```
 
 The client-to-server route may be private, but accepted decision payloads leave
@@ -231,74 +288,18 @@ end-to-end smoke for the provider, receipt, and result path.
 | `JEV_BUDGET_PATH` | Recommended | `runtime/usage.json` | Usage ledger; services should use an absolute path outside the checkout |
 | `JEV_RECEIPT_DIR` | Recommended | `runtime/receipts-v2` | Receipt directory; services should use an absolute path outside the checkout |
 
-## Compatibility evidence for 0.4.0
+## Current verification
 
-| Surface | Evidence in this release | Status |
-| --- | --- | --- |
-| Python server, tools, skills, packaging, and release checks | 186 tests and release validators passed on macOS/Python 3.12 and Kali Linux/Python 3.14 | Verified |
-| Installed-package MCP transport | Clean install outside checkout; real MCP initialize/list-tools returned all eight tools on macOS and Linux | Verified |
-| Live TypeSafe decision | Tiny synthetic `jev_rank` through the universal server returned pinned `jev-1.13.0`, preserved all IDs, and wrote budget plus receipt metadata | Verified on Kali loopback |
-| macOS launchd service | Template and static checks only | Not live-verified |
-| Codex local marketplace/plugin pickup | Codex CLI `0.155.0-alpha.9.2` loaded both skills and discovered/called `jev_health` from an isolated portable marketplace | Verified on macOS |
-| Claude Code `--plugin-dir` | Manifest validation passed, but Claude Code `2.0.65` timed out even on a no-plugin control `-p` request | Client baseline blocked live pickup |
-| Linux foreground server | Clean install, full suite, MCP handshake, health, paid synthetic decision, and receipt checks | Verified on Kali Linux |
-| Linux systemd service | Unit template and static checks only; the installed personal service was not changed | Not live-verified for this tree |
-| Windows foreground launcher | Launcher and CI job are present; neither CI nor a live launcher run has completed for this public tree | Not verified |
+The server, installed-package MCP transport, a tiny live TypeSafe decision, and
+Codex portable-plugin pickup have been exercised on macOS and Kali Linux.
+Windows, persistent service templates, and Claude live pickup remain explicitly
+unverified. Versions, results, and boundaries are recorded in
+[Verification](docs/verification.md); they are evidence for those configurations,
+not a claim that every deployment works.
 
-The checked-in CI matrix targets Ubuntu with Python 3.10 and 3.13, macOS with
-Python 3.12, and Windows with Python 3.12. A configured job is not evidence that
-the job has run.
-
-## Suitable workloads
-
-- Ranking a bounded public documentation or retrieval queue.
-- Applying one semantic predicate to a complete set of public records.
-- Comparing an atomic public claim with an exact public evidence span.
-- Routing among host-defined, non-executing proposals.
-- Building a feature matrix over synthetic regression cases.
-- Prioritizing public-source code audit, pentest preparation, and security OSINT
-  before independent analysis.
-
-Use deterministic parsing, search, static analysis, or ordinary reasoning when
-they already express the task. Jev does not decide testing authorization,
-scope, exploitability, severity, reportability, or live actions. See
-[Use cases](docs/use-cases.md) and [Limitations](docs/limitations.md).
-
-## Development and release checks
-
-Install the development extra, then run:
-
-```bash
-server/.venv/bin/python -m pip install -e "./server[dev]"
-server/.venv/bin/python -m pytest server/tests
-server/.venv/bin/python -m pytest tools/test_configure_profile.py
-server/.venv/bin/python -m pytest scripts/test_package_portable.py
-server/.venv/bin/python -m pytest skills/jev-pentest/scripts/test_public_source_audit.py
-server/.venv/bin/python -m pytest skills/jev-pentest/scripts/test_evaluate_source_audit.py
-server/.venv/bin/python scripts/verify_release.py
-```
-
-Build the deterministic portable archive with:
-
-```bash
-server/.venv/bin/python scripts/package_portable.py --output ../dist/jev-native-0.4.0.zip
-```
-
-The output must be outside the source root. The packager includes only the
-checked-in release inventory, excludes runtime state and build output, and scans
-included files for selected credential patterns. That scan is a tripwire, not a
-proof that arbitrary content is public or secret-free. Review the manifest and
-checksum before distribution.
-
-## Repository map
-
-```text
-server/       MCP server, receipt ledger, tests, and evaluation runner
-skills/       General and public-source security workflow skills
-tools/        Endpoint-profile helper
-scripts/      Release verification and deterministic packaging
-docs/         Deployment, architecture, security, use cases, and limits
-```
+For concrete workflow placement and boundaries, see [Use cases](docs/use-cases.md)
+and [Limitations](docs/limitations.md). Development, full test, and release
+commands live in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Documentation
 
@@ -308,6 +309,7 @@ docs/         Deployment, architecture, security, use cases, and limits
 - [Security model](docs/security-model.md)
 - [Use cases](docs/use-cases.md)
 - [Limitations](docs/limitations.md)
+- [Verification](docs/verification.md)
 - [Contributing](CONTRIBUTING.md)
 - [Security policy](SECURITY.md)
 - [Changelog](CHANGELOG.md)

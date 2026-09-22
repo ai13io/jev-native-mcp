@@ -19,6 +19,7 @@ docs/deployment.md
 docs/limitations.md
 docs/security-model.md
 docs/use-cases.md
+docs/verification.md
 release-files.txt
 scripts/package_portable.py
 scripts/test_package_portable.py
