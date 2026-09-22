@@ -13,7 +13,9 @@ Use it when this review repeats often enough to justify a separate hosted
 decision step. For a small one-off question, ordinary Codex or Claude reasoning
 is usually the better tool.
 
-**Status:** 0.4.0 release candidate, shadow-first.
+**Status:** 0.4.0 release candidate. By default, Jev runs alongside the existing
+review process and does not change reading order until its results have been
+compared with a baseline.
 
 **Requirements:** Python 3.10+, TypeSafe API access, and a compatible MCP
 client. Decision inputs go to TypeSafe's hosted API; this release accepts only
@@ -30,9 +32,9 @@ non-sensitive public or synthetic material.
 - **Check conclusions against sources.** Compare an exact claim with an exact
   passage as `supports`, `contradicts`, or `insufficient`, then inspect the
   original yourself.
-- **Decide whether Jev deserves a place in the workflow.** Compare against a
-  baseline, record independently reviewed outcomes, and keep the lane in shadow
-  until it passes a preregistered gate.
+- **Decide whether Jev deserves a place in the workflow.** Start by observing
+  its output without changing the existing process. Let it reorder work only
+  after it meets evaluation criteria defined before the trial.
 
 ## A review workflow in practice
 
@@ -230,8 +232,8 @@ For a complete-plugin installation, also confirm that both workflow skills are
 visible. In Claude Code they are namespaced as `/jev-native:jev-native` and
 `/jev-native:jev-pentest`. The direct tools-only path does not provide them.
 
-After health succeeds, the synthetic ranking example above is an optional paid
-end-to-end smoke for the provider, receipt, and result path.
+After health succeeds, one tiny synthetic request with stable IDs is an optional
+paid end-to-end smoke for the provider, receipt, and result path.
 
 ## Configuration
 

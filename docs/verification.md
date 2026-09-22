@@ -3,7 +3,7 @@
 This page records what release 0.4.0 has actually exercised. It is evidence for
 the named configuration, not a portability or semantic-quality guarantee.
 
-The immutable staging anchor is Git tag `v0.4.0-rc2`. Its private GitHub
+The immutable staging anchor is Git tag `v0.4.0-rc3`. Its private GitHub
 prerelease carries the portable ZIP and `SHA256SUMS`; `main` by itself is not a
 release receipt.
 
