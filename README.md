@@ -1,56 +1,74 @@
 # Jev Native MCP
 
-Typed ranking, classification, and claim review with TypeSafe Jev for Codex,
-Claude Code, and other Streamable HTTP MCP clients.
+**Turn public code and document collections into traceable review queues for
+Codex and Claude Code.**
 
-Run the MCP server on a workstation or controlled private network. It forwards
-reviewed public or synthetic inputs to TypeSafe's hosted API, validates the
-responses, and records local usage and receipt metadata. The package contains
-eight tools and two optional workflow skills. It is not a general reasoning
-engine, local inference server, or authority for consequential actions.
+When an agent has many release notes, source chunks, public issues, or claims to
+review against the same semantic question, Jev Native MCP provides a repeatable
+first-pass workflow. It prepares bounded batches, applies typed Jev decisions,
+keeps stable references to every original item, and helps the agent verify its
+conclusions against exact source passages.
 
-**Status:** 0.4.0 release candidate, shadow-first. Compare Jev output with an
-independently reviewed baseline before it changes review order. The pinned
-`jev-1.13.0` model reduces alias drift; it does not make responses deterministic
-or repeatable.
+Use it when this review repeats often enough to justify a separate hosted
+decision step. For a small one-off question, ordinary Codex or Claude reasoning
+is usually the better tool.
 
-> Decision inputs are sent to TypeSafe. Use non-sensitive public or synthetic
-> data. Results are advisory and must be evaluated against your own baseline.
+**Status:** 0.4.0 release candidate, shadow-first.
 
-## Why this project exists
+**Requirements:** Python 3.10+, TypeSafe API access, and a compatible MCP
+client. Decision inputs go to TypeSafe's hosted API; this release accepts only
+non-sensitive public or synthetic material.
 
-Jev exposes fast typed decisions, but an API primitive alone does not give an
-agent an explicit operating contract. A useful integration still has to decide what
-may leave the machine, preserve every candidate, reject malformed responses,
-control spend, survive partial failures, and show an operator what happened.
+## What you can do
 
-Jev Native MCP supplies that missing operational layer:
+- **Build a focused reading queue.** Rank public source or documentation while
+  retaining every original item, stable ID, cutoff tie, skipped region, and
+  failed batch for follow-up.
+- **Apply one question across a collection.** Screen a frozen corpus for a
+  behavior, classify public issues, or identify release notes that may require
+  application changes.
+- **Check conclusions against sources.** Compare an exact claim with an exact
+  passage as `supports`, `contradicts`, or `insufficient`, then inspect the
+  original yourself.
+- **Decide whether Jev deserves a place in the workflow.** Compare against a
+  baseline, record independently reviewed outcomes, and keep the lane in shadow
+  until it passes a preregistered gate.
 
-- **Native agent tools, not prompt snippets.** Codex, Claude Code, and generic
-  MCP clients receive real typed tools through Streamable HTTP.
-- **Complete-set review.** Rankings retain every stable ID, expand cutoff ties,
-  and never turn a low score into permission to discard evidence.
-- **Fail-loud contracts.** Missing IDs, impossible probabilities, wrong model
-  versions, malformed scores, and incomplete batches remain errors—not empty or
-  apparently successful results.
-- **Controlled hosted use.** Only caller-declared public or synthetic inputs are
-  accepted; local screening is a final tripwire before TypeSafe egress.
-- **Operational accountability.** The server enforces a local spend ceiling and
-  writes request-body-free, HMAC-linked receipts plus closed outcome telemetry.
-- **Portable packaging.** One bundle includes Codex and Claude manifests,
-  workstation/private-server guides, deterministic packaging, and a positive
-  release inventory. Exercised paths are listed in
-  [Verification](docs/verification.md).
+## A review workflow in practice
 
-The intended workflow is deliberately simple:
+Suppose you are preparing a migration checklist from public release notes and
+upgrade guides. The important changes are described in different language, and
+you need to know which documents deserve attention before writing the checklist.
+
+Ask the host agent:
+
+> Review these public release notes for changes that may require application
+> updates. Build a first-pass queue, retain the source references, and check
+> each proposed checklist claim against its original passage.
+
+The agent gathers the public documents. Jev Native MCP supports the repeated
+judgments between collection and final analysis:
 
 ```text
-deterministic inventory -> reviewed cards -> Jev advisory decision
-        -> agent reads original evidence -> independent outcome record
+public release notes and guides
+          ↓
+stable source references and bounded batches
+          ↓
+per-item signals and a first-pass review queue
+          ↓
+agent reads originals and checks proposed claims
+          ↓
+migration checklist with sources and unresolved questions
 ```
 
-Jev reduces the first-pass queue. The reasoning agent still owns source
-understanding, verification, and every consequential decision.
+The final artifact is still written and verified by the host agent. The package
+provides the ranking, batch screening, source addressing, claim checks, and
+evaluation record. Unprocessed items, skipped regions, ties, and failed batches
+remain visible instead of disappearing from the result.
+
+This is a workflow illustration, not a benchmark or recorded migration result.
+Use the bundled evaluation tools to compare it with the existing review process
+before allowing Jev rankings to change reading order.
 
 ## What is included
 
@@ -63,67 +81,6 @@ understanding, verification, and every consequential decision.
 | Evaluation harness | Independent result validation, repeatability metrics, frozen fixtures, and shadow-to-advisory qualification support |
 | Runtime controls | Exact model pin, strict response validation, bounded retries, daily budget, persistence preflight, and request-body-free receipts |
 | Portable release | Codex marketplace, Claude plugin, macOS/Linux/Windows guides, verified file inventory, manifest, and deterministic ZIP |
-
-## How it differs
-
-| Alternative | What remains for the integrator | Jev Native MCP |
-| --- | --- | --- |
-| Official Jev skill | Teaches API usage but does not create a running MCP service or tools | Ships the server, tool contracts, skills, deployment, and release bundle |
-| Direct TypeSafe SDK/API | Application must implement validation, data policy, spend control, receipts, and client wiring | Centralizes those controls behind one MCP contract |
-| Browser or action automation | Browser control and action execution are outside this project's scope | No browser driver; selection results never execute actions |
-| Compaction or model routing | Context mutation and automatic model routing are outside this project's scope | No context deletion or automatic routing; results remain advisory |
-| Local Jev-like models | Keep inference local but use a different model and compatibility surface | Uses hosted TypeSafe Jev and makes that egress explicit |
-
-## Example: prioritize a documentation queue
-
-This synthetic example shows the `jev_rank` contract. It is an optional paid
-smoke test, not evidence of ranking quality or a reason to add a model call to a
-trivial task.
-
-```json
-{
-  "data_class": "synthetic",
-  "goal": "Find documentation that helps diagnose HTTP request timeouts.",
-  "candidates": [
-    {
-      "id": "timeouts",
-      "text": "A guide to connect timeouts, read timeouts, and retry deadlines."
-    },
-    {
-      "id": "formatting",
-      "text": "A guide to headings, lists, and formatting in Markdown."
-    },
-    {
-      "id": "storage",
-      "text": "A guide to database backups and storage capacity planning."
-    }
-  ],
-  "top_k": 1
-}
-```
-
-Illustrative excerpt—the probabilities below explain the shape and are not
-measured output:
-
-```json
-{
-  "ranked": [
-    {"id": "timeouts", "relevance": 0.94},
-    {"id": "storage", "relevance": 0.10},
-    {"id": "formatting", "relevance": 0.03}
-  ],
-  "all_ids": ["timeouts", "storage", "formatting"],
-  "top_ids": ["timeouts"],
-  "requested_top_k": 1,
-  "effective_top_k": 1,
-  "all_candidates_preserved": true,
-  "candidate_count": 3
-}
-```
-
-The full response also contains model, usage, timing, receipt, and cutoff
-metadata. Every candidate remains available, and a tie at the cutoff may expand
-`top_ids` beyond the requested size.
 
 ## Tools
 

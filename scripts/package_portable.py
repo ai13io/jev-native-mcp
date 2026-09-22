@@ -244,15 +244,15 @@ def generated_marketplace_files(version: str) -> dict[str, bytes]:
     claude = {
         "name": "jev-native-portable",
         "owner": {"name": "Jev Native contributors"},
-        "description": "Hosted Jev decisions through a loopback or private-network MCP",
+        "description": "Traceable first-pass review of public code and documents through hosted Jev",
         "metadata": {
-            "description": "Hosted Jev decisions through a loopback or private-network MCP"
+            "description": "Traceable first-pass review of public code and documents through hosted Jev"
         },
         "plugins": [
             {
                 "name": "jev-native",
                 "source": "./jev-native",
-                "description": "Hosted Jev advisory tools through a loopback or private-network MCP",
+                "description": "Traceable first-pass review through a loopback or private-network MCP backed by hosted Jev",
                 "version": version,
                 "author": {"name": "Jev Native contributors"},
                 "category": "Productivity",

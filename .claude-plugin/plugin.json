@@ -1,7 +1,7 @@
 {
   "name": "jev-native",
   "version": "0.4.0",
-  "description": "Jev decision support for public or synthetic review and security-research queues.",
+  "description": "Traceable first-pass review of public code and documents with TypeSafe Jev.",
   "author": {
     "name": "Jev Native contributors"
   },
